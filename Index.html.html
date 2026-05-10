@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mahesh Nakkalapally — Designer Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #1a1a1a;
+    --surface3: #222222;
+    --border: rgba(255,255,255,0.08);
+    --border-hover: rgba(255,255,255,0.18);
+    --gold: #c9a96e;
+    --gold-light: #e2c896;
+    --gold-dark: #9a7a45;
+    --white: #f5f5f5;
+    --muted: #888888;
+    --muted2: #555555;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dark); }
+
+  /* CURSOR */
+  .cursor { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; }
+  .cursor-ring { width: 36px; height: 36px; border: 1px solid rgba(201,169,110,0.45); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: left 0.12s ease, top 0.12s ease; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 26px 60px; background: linear-gradient(to bottom, rgba(10,10,10,0.96) 0%, transparent 100%); }
+  .nav-logo { font-size: 13px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a { font-size: 11px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--white); }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 120px 60px 80px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: 20%; right: -5%; width: 540px; height: 540px; border-radius: 50%; background: radial-gradient(circle, rgba(201,169,110,0.07) 0%, transparent 65%); pointer-events: none; }
+  .hero-eyebrow { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; opacity: 0; animation: slideIn 0.8s 0.2s ease forwards; }
+  .hero-eyebrow::before { content: ''; display: block; width: 40px; height: 1px; background: var(--gold); }
+  .hero-eyebrow span { font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+  h1 { font-family: 'Roboto', sans-serif; font-size: clamp(50px, 6.5vw, 90px); font-weight: 100; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 8px; opacity: 0; animation: slideIn 0.8s 0.3s ease forwards; }
+  h1 strong { font-weight: 700; display: block; }
+  h1 em { font-style: italic; font-weight: 100; color: var(--gold); }
+  .hero-sub { font-size: 12px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 24px; margin-bottom: 48px; opacity: 0; animation: slideIn 0.8s 0.4s ease forwards; }
+  .hero-cta { display: flex; gap: 16px; opacity: 0; animation: slideIn 0.8s 0.5s ease forwards; }
+  .btn-primary { padding: 14px 36px; background: var(--gold); color: #0a0a0a; font-family: 'Roboto', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; transition: background 0.3s, transform 0.2s; display: inline-block; }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline { padding: 14px 36px; background: transparent; color: var(--white); font-family: 'Roboto', sans-serif; font-size: 11px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; border: 1px solid var(--border-hover); cursor: pointer; transition: border-color 0.3s, color 0.3s, transform 0.2s; display: inline-block; }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+  .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 24px; opacity: 0; animation: fadeIn 1s 0.7s ease forwards; }
+  .hero-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); width: 100%; max-width: 330px; }
+  .hero-stat { background: var(--surface); padding: 26px 22px; text-align: center; }
+  .hero-stat-num { font-size: 40px; font-weight: 700; color: var(--gold); line-height: 1; letter-spacing: -0.03em; }
+  .hero-stat-label { font-size: 9px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+  .hero-contact-block { width: 100%; max-width: 330px; padding: 22px; border: 1px solid var(--border); }
+  .contact-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 12px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .contact-row:last-child { border-bottom: none; }
+  .contact-row:hover { color: var(--gold); }
+  .contact-icon { width: 26px; height: 26px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; font-weight: 500; color: var(--gold); }
+
+  /* SECTIONS */
+  section { padding: 96px 60px; }
+  .section-header { display: flex; align-items: center; gap: 20px; margin-bottom: 60px; }
+  .section-num { font-size: 10px; font-weight: 500; letter-spacing: 0.25em; color: var(--gold); }
+  .section-rule { flex: 1; max-width: 60px; height: 1px; background: var(--gold-dark); }
+  .section-title { font-size: clamp(30px, 4vw, 50px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .about-text p { font-size: 15px; font-weight: 300; line-height: 1.85; color: #aaaaaa; margin-bottom: 20px; }
+  .about-text p strong { color: var(--white); font-weight: 500; }
+  .expertise-list { margin-top: 32px; }
+  .expertise-item { display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--muted); transition: color 0.2s; }
+  .expertise-item:hover { color: var(--white); }
+  .expertise-item::before { content: ''; width: 4px; height: 4px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+  .about-cards { display: grid; gap: 10px; }
+  .info-card { background: var(--surface2); border: 1px solid var(--border); padding: 26px 30px; transition: border-color 0.3s, background 0.3s; }
+  .info-card:hover { border-color: var(--border-hover); background: var(--surface3); }
+  .info-card-label { font-size: 9px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .info-card-value { font-size: 14px; font-weight: 400; color: var(--white); }
+
+  /* SKILLS */
+  .skills-section { background: var(--surface); }
+  .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 60px; }
+  .skill-card { background: var(--surface); padding: 34px 24px; text-align: center; transition: background 0.3s; position: relative; overflow: hidden; cursor: default; }
+  .skill-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transition: transform 0.3s ease; }
+  .skill-card:hover { background: var(--surface2); }
+  .skill-card:hover::after { transform: scaleX(1); }
+  .skill-icon { font-size: 24px; margin-bottom: 14px; color: var(--gold); display: block; font-weight: 500; letter-spacing: -0.02em; }
+  .skill-name { font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); margin-bottom: 5px; }
+  .skill-sub { font-size: 10px; color: var(--muted2); }
+  .specialty-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+  .specialty-tag { padding: 10px 20px; border: 1px solid var(--border); font-size: 11px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); transition: all 0.25s; cursor: default; }
+  .specialty-tag:hover { border-color: var(--gold); color: var(--gold); }
+  .subsection-label { font-size: 9px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted2); margin-bottom: 22px; }
+
+  /* EXPERIENCE */
+  .exp-timeline { padding-left: 40px; position: relative; }
+  .exp-timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 0; width: 1px; background: var(--border); }
+  .exp-item { position: relative; margin-bottom: 52px; padding-left: 32px; }
+  .exp-dot { position: absolute; left: -48px; top: 8px; width: 10px; height: 10px; background: var(--gold); border-radius: 50%; border: 2px solid var(--bg); box-shadow: 0 0 0 1px var(--gold); }
+  .exp-period-tag { display: inline-block; padding: 4px 12px; border: 1px solid var(--border); font-size: 10px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  .exp-role { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 6px; }
+  .exp-company-name { font-size: 12px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+  .exp-desc { font-size: 14px; font-weight: 300; line-height: 1.8; color: #999; max-width: 600px; }
+
+  /* INDUSTRIES */
+  .industries-section { background: var(--surface); }
+  .industry-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .industry-card { background: var(--surface); padding: 40px 34px; transition: background 0.3s; }
+  .industry-card:hover { background: var(--surface2); }
+  .industry-num { font-size: 48px; font-weight: 100; color: var(--surface3); letter-spacing: -0.04em; line-height: 1; margin-bottom: 14px; transition: color 0.3s; }
+  .industry-card:hover .industry-num { color: var(--gold-dark); }
+  .industry-name { font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+  .industry-desc { font-size: 12px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+
+  /* EDUCATION */
+  .edu-block { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; padding: 48px 48px; border: 1px solid var(--border); background: var(--surface2); transition: border-color 0.3s; }
+  .edu-block:hover { border-color: var(--border-hover); }
+  .edu-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .edu-degree { font-size: 26px; font-weight: 700; line-height: 1.2; margin-bottom: 8px; }
+  .edu-institution { font-size: 13px; font-weight: 300; color: var(--muted); letter-spacing: 0.04em; }
+  .edu-year { font-size: 68px; font-weight: 100; color: var(--surface3); line-height: 1; letter-spacing: -0.04em; margin-bottom: 20px; }
+  .edu-period-tag { display: inline-block; padding: 8px 20px; border: 1px solid var(--border); font-size: 10px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+  /* FOOTER */
+  footer { padding: 60px 60px; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 40px; }
+  .footer-name { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .footer-tagline { font-size: 13px; font-weight: 300; font-style: italic; color: var(--muted); }
+  .footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+  .footer-links { display: flex; gap: 24px; list-style: none; }
+  .footer-links a { font-size: 10px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 10px; color: var(--muted2); letter-spacing: 0.1em; }
+
+  /* ANIMATIONS */
+  @keyframes slideIn { from { opacity:0; transform: translateY(26px); } to { opacity:1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  .reveal { opacity:0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity:1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    nav { padding: 22px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 108px 24px 60px; gap: 52px; }
+    .hero-right { align-items: flex-start; }
+    section { padding: 64px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 36px; }
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    .industry-grid { grid-template-columns: 1fr 1fr; }
+    .edu-block { grid-template-columns: 1fr; padding: 32px 24px; }
+    footer { grid-template-columns: 1fr; }
+    .footer-right { align-items: flex-start; }
+    .exp-timeline { padding-left: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">M · Nakkalapally</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#industries">Industries</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="https://www.behance.net/mcreative2" target="_blank">Behance ↗</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div>
+    <div class="hero-eyebrow"><span>UI/UX &amp; Sr. Graphic Designer</span></div>
+    <h1>
+      <span>Mahesh</span>
+      <strong>Nakkalapally</strong>
+    </h1>
+    <div class="hero-sub">Hyderabad, Telangana &nbsp;·&nbsp; 12+ Years of Creative Excellence</div>
+    <div class="hero-cta">
+      <a href="mailto:creativem1989@gmail.com" class="btn-primary">Get In Touch</a>
+      <a href="https://www.linkedin.com/in/maheshnakkalapally-2428422bb" target="_blank" class="btn-outline">LinkedIn ↗</a>
+      <a href="https://www.behance.net/mcreative2" target="_blank" class="btn-outline">Behance ↗</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat-grid">
+      <div class="hero-stat"><div class="hero-stat-num">12+</div><div class="hero-stat-label">Years Exp.</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">4</div><div class="hero-stat-label">Industries</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">8</div><div class="hero-stat-label">Tools</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">∞</div><div class="hero-stat-label">Creativity</div></div>
+    </div>
+    <div class="hero-contact-block">
+      <a href="mailto:creativem1989@gmail.com" class="contact-row">
+        <div class="contact-icon">@</div>creativem1989@gmail.com
+      </a>
+      <a href="https://www.linkedin.com/in/maheshnakkalapally-2428422bb" target="_blank" class="contact-row">
+        <div class="contact-icon">in</div>linkedin.com/in/maheshnakkalapally
+      </a>
+      <a href="https://www.behance.net/mcreative2" target="_blank" class="contact-row">
+        <div class="contact-icon">Bē</div>behance.net/mcreative2
+      </a>
+      <div class="contact-row">
+        <div class="contact-icon">◎</div>Hyderabad, Telangana, India
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <div class="section-rule"></div>
+    <h2 class="section-title">About</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>Senior Graphic Designer with <strong>10+ years</strong> of experience delivering impactful visual solutions across FMCG, pharma, cosmetics, and e-commerce industries.</p>
+      <p>Specialized in creating <strong>high-converting Amazon A+ Content</strong>, product infographics, comparison charts, and enhanced brand visuals that drive engagement and sales.</p>
+      <p>Strong expertise in <strong>packaging design, branding, and digital creatives</strong> that build consistent and powerful brand identities — with a proven ability to lead design projects and implement structured design systems.</p>
+      <div class="expertise-list">
+        <div class="expertise-item">Amazon A+ Content &amp; Product Infographics</div>
+        <div class="expertise-item">Packaging Design &amp; Brand Identity</div>
+        <div class="expertise-item">UI/UX Design &amp; UX Research</div>
+        <div class="expertise-item">Digital Creatives &amp; Social Media</div>
+        <div class="expertise-item">Design Systems &amp; Project Leadership</div>
+      </div>
+    </div>
+    <div class="about-cards reveal">
+      <div class="info-card"><div class="info-card-label">Current Role</div><div class="info-card-value">Sr. Graphic Designer at Venki Creations</div></div>
+      <div class="info-card"><div class="info-card-label">Location</div><div class="info-card-value">Begumpet, Hyderabad — Telangana, India</div></div>
+      <div class="info-card"><div class="info-card-label">Focus</div><div class="info-card-value">Fast, strategic &amp; result-oriented creative solutions aligned with business goals</div></div>
+      <div class="info-card"><div class="info-card-label">Contact</div><div class="info-card-value">creativem1989@gmail.com</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section" id="skills">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <div class="section-rule"></div>
+    <h2 class="section-title">Tools &amp; Skills</h2>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-card"><span class="skill-icon">Ai</span><div class="skill-name">Illustrator</div><div class="skill-sub">Adobe CC</div></div>
+    <div class="skill-card"><span class="skill-icon">Ps</span><div class="skill-name">Photoshop</div><div class="skill-sub">Adobe CC</div></div>
+    <div class="skill-card"><span class="skill-icon">Id</span><div class="skill-name">InDesign</div><div class="skill-sub">Adobe CC</div></div>
+    <div class="skill-card"><span class="skill-icon">Cd</span><div class="skill-name">CorelDRAW</div><div class="skill-sub">Vector Suite</div></div>
+    <div class="skill-card"><span class="skill-icon">Fg</span><div class="skill-name">Figma</div><div class="skill-sub">UI/UX Design</div></div>
+    <div class="skill-card"><span class="skill-icon">Cv</span><div class="skill-name">Canva</div><div class="skill-sub">Social &amp; Digital</div></div>
+    <div class="skill-card"><span class="skill-icon">WP</span><div class="skill-name">WordPress</div><div class="skill-sub">Web Design</div></div>
+    <div class="skill-card"><span class="skill-icon">AI</span><div class="skill-name">MS Copilot</div><div class="skill-sub">AI-Assisted</div></div>
+  </div>
+  <div class="subsection-label reveal">Specialisations</div>
+  <div class="specialty-grid reveal">
+    <div class="specialty-tag">Amazon A+ Content</div>
+    <div class="specialty-tag">Product Infographics</div>
+    <div class="specialty-tag">Comparison Charts</div>
+    <div class="specialty-tag">Brand Identity</div>
+    <div class="specialty-tag">Packaging Design</div>
+    <div class="specialty-tag">UX Research</div>
+    <div class="specialty-tag">Design Systems</div>
+    <div class="specialty-tag">Social Media Creatives</div>
+    <div class="specialty-tag">E-commerce Visuals</div>
+    <div class="specialty-tag">Digital Marketing</div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <div class="section-rule"></div>
+    <h2 class="section-title">Experience</h2>
+  </div>
+  <div class="exp-timeline">
+    <div class="exp-item reveal">
+      <div class="exp-dot"></div>
+      <div class="exp-period-tag">July 2019 — Present &nbsp;·&nbsp; 6+ Years</div>
+      <div class="exp-role">Sr. Graphic Designer</div>
+      <div class="exp-company-name">Venki Creations — Begumpet, Hyderabad</div>
+      <div class="exp-desc">Leading end-to-end design projects across brand identity, packaging, and e-commerce. Creating high-converting Amazon A+ Content, product infographics, and enhanced brand visuals. Implementing structured design systems and ensuring client satisfaction with fast, strategic, and result-oriented creative solutions aligned with business goals.</div>
+    </div>
+    <div class="exp-item reveal" style="margin-bottom:0;">
+      <div class="exp-dot" style="background:var(--surface3); box-shadow: 0 0 0 1px var(--muted2);"></div>
+      <div class="exp-period-tag">2013 — 2019 &nbsp;·&nbsp; Prior Experience</div>
+      <div class="exp-role">Graphic Designer</div>
+      <div class="exp-company-name">Multiple Studios &amp; Agencies</div>
+      <div class="exp-desc">Over 6 years of foundational design experience in branding, print media, and packaging across FMCG, cosmetics, and retail clients. Built deep mastery of CorelDRAW, Adobe Photoshop, and Illustrator.</div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section class="industries-section" id="industries">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <div class="section-rule"></div>
+    <h2 class="section-title">Industries</h2>
+  </div>
+  <div class="industry-grid reveal">
+    <div class="industry-card"><div class="industry-num">01</div><div class="industry-name">FMCG</div><div class="industry-desc">Fast-moving consumer goods packaging, POS materials, and retail display creatives.</div></div>
+    <div class="industry-card"><div class="industry-num">02</div><div class="industry-name">Pharma</div><div class="industry-desc">Pharmaceutical packaging, regulatory-compliant label design, and medical brand identity.</div></div>
+    <div class="industry-card"><div class="industry-num">03</div><div class="industry-name">Cosmetics</div><div class="industry-desc">Premium beauty packaging, brand storytelling visuals, and cosmetic product infographics.</div></div>
+    <div class="industry-card"><div class="industry-num">04</div><div class="industry-name">E-commerce</div><div class="industry-desc">Amazon A+ Content, comparison charts, product listings, and conversion-focused visuals.</div></div>
+    <div class="industry-card"><div class="industry-num">05</div><div class="industry-name">Branding</div><div class="industry-desc">End-to-end brand identity systems, logo design, style guides, and visual language.</div></div>
+    <div class="industry-card"><div class="industry-num">06</div><div class="industry-name">Digital</div><div class="industry-desc">Social media creatives, UI/UX design, digital marketing assets, and web design.</div></div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header reveal">
+    <span class="section-num">05</span>
+    <div class="section-rule"></div>
+    <h2 class="section-title">Education</h2>
+  </div>
+  <div class="edu-block reveal">
+    <div>
+      <div class="edu-eyebrow">Academic Background</div>
+      <div class="edu-degree">Bachelor of Commerce<br>Business &amp; Commerce</div>
+      <div class="edu-institution" style="margin-top:12px;">New Govt. Degree College, Khairtabad<br>Osmania University — Hyderabad</div>
+    </div>
+    <div>
+      <div class="edu-year">2013</div>
+      <div class="edu-period-tag">June 2009 — July 2013</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-name">Mahesh Nakkalapally</div>
+    <div class="footer-tagline">"Strategic, result-oriented creative solutions — built for business impact."</div>
+  </div>
+  <div class="footer-right">
+    <ul class="footer-links">
+      <li><a href="mailto:creativem1989@gmail.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/maheshnakkalapally-2428422bb" target="_blank">LinkedIn</a></li>
+      <li><a href="https://www.behance.net/mcreative2" target="_blank">Behance</a></li>
+    </ul>
+    <div class="footer-copy">© 2025 Mahesh Nakkalapally. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX - 4 + 'px';
+    cursor.style.top = e.clientY - 4 + 'px';
+    ring.style.left = e.clientX - 18 + 'px';
+    ring.style.top = e.clientY - 18 + 'px';
+  });
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 90);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
